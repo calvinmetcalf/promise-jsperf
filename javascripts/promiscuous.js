@@ -67,7 +67,8 @@ window.promiscuous={};
 		var promise = {};
 		promise.then = createHandler(promise, value, true);
 		return promise;
-	};
+	}
+	
 	exports.reject= function (reason) {
 		var promise = {};
 		promise.then = createHandler(promise, reason, false);
