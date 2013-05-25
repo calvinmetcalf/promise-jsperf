@@ -1,4 +1,5 @@
 /*! Promiscuous ©2013 Ruben Verborgh @license MIT https://github.com/RubenVerborgh/promiscuous*/
+window.promiscuous={};
 (function (exports) {
   var func = "function",
       noop = function () {};
@@ -44,10 +45,10 @@
       var callback = success ? onFulfilled : onRejected, result;
       if (typeof callback !== func)
         return promise;
-      execute.bind(promise, callback, value, result = createDeferred());
+      setTimeout(execute.bind(promise, callback, value, result = createDeferred()));
       return result.promise;
     };
-  };
+  }
 
   function execute(callback, value, deferred) {
     try {
