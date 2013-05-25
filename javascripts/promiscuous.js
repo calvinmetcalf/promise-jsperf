@@ -45,7 +45,7 @@ window.promiscuous={};
       var callback = success ? onFulfilled : onRejected, result;
       if (typeof callback !== func)
         return promise;
-      setTimeout(execute.bind(promise, callback, value, result = createDeferred()));
+      execute.bind(promise, callback, value, result = createDeferred())
       return result.promise;
     };
   }
