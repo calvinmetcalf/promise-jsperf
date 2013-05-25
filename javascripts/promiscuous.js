@@ -47,7 +47,7 @@
       execute.bind(promise, callback, value, result = createDeferred());
       return result.promise;
     };
-  }
+  };
 
   function execute(callback, value, deferred) {
     try {
