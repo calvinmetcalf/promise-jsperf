@@ -5,53 +5,51 @@ window.promiscuous={};
 		noop = function () {};
 
 	function createDeferred() {
-	var handler,
-		changeState,
-		promise = {
-			then: function (onFulfilled, onRejected) {
-			return handler(onFulfilled, onRejected);
-			}
-		};
-
-	
+		var handler,
+			changeState,
+			promise = {
+				then: function (onFulfilled, onRejected) {
+					return handler(onFulfilled, onRejected);
+				}
+			};
 		var pending = [];
 		handler = function (onFulfilled, onRejected) {
-		var d = createDeferred();
-		pending.push({ d: d, resolve: onFulfilled, reject: onRejected });
-		return d.promise;
-		};
+			var d = createDeferred();
+			pending.push({ d: d, resolve: onFulfilled, reject: onRejected });
+			return d.promise;
+			};
 		changeState = function (action, value, success) {
-		var p;
-		for (var i = 0, l = pending.length; i < l; i++) {
-			p = pending[i], deferred = p.d, callback = p[action];
-			if (typeof callback !== func) {
-				deferred[action](value);
-			} else {
-				execute(callback, value, deferred);
+			var p;
+			for (var i = 0, l = pending.length; i < l; i++) {
+				p = pending[i], deferred = p.d, callback = p[action];
+				if (typeof callback !== func) {
+					deferred[action](value);
+				} else {
+					execute(callback, value, deferred);
+				}
 			}
-		}
-		handler = createHandler(promise, value, success);
-		changeState = noop;
+			handler = createHandler(promise, value, success);
+			changeState = noop;
 		};
 	 
 
-	return {
-		resolve: function (value)	{ changeState('resolve', value, true); },
-		reject : function (reason) { changeState('reject', reason, false); },
-		promise: promise
-	};
+		return {
+			resolve: function (value)	{ changeState('resolve', value, true); },
+			reject : function (reason) { changeState('reject', reason, false); },
+			promise: promise
+		};
 	}
 
 	function createHandler(promise, value, success) {
-	return function (onFulfilled, onRejected) {
-		var callback = success ? onFulfilled : onRejected, result;
-		if (typeof callback !== func){
-		return promise;
-		}
-		result = createDeferred();
-		execute(callback, value, result)
-		return result.promise;
-	};
+		return function (onFulfilled, onRejected) {
+			var callback = success ? onFulfilled : onRejected, result;
+			if (typeof callback !== func){
+				return promise;
+			}
+			result = createDeferred();
+			execute(callback, value, result)
+			return result.promise;
+		};
 	}
 
 	function execute(callback, value, deferred) {
