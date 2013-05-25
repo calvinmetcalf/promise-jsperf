@@ -55,16 +55,11 @@ window.promiscuous={};
 	}
 
 	function execute(callback, value, deferred) {
-		try {
-			var result = callback(value);
-			if (result && typeof result.then === func) {
-				result.then(deferred.resolve, deferred.reject);
-			} else {
-				deferred.resolve(result);
-			}
-		}
-		catch (error) {
-			deferred.reject(error);
+		var result = callback(value);
+		if (result && typeof result.then === func) {
+			result.then(deferred.resolve, deferred.reject);
+		} else {
+			deferred.resolve(result);
 		}
 	}
 
