@@ -45,7 +45,7 @@ var promiscuous={};
       var callback = success ? onFulfilled : onRejected, result;
       if (typeof callback !== func)
         return promise;
-      setImmediate(execute.bind(promise, callback, value, result = createDeferred()));
+      setTimeout(execute.bind(promise, callback, value, result = createDeferred()));
       return result.promise;
     };
   }
