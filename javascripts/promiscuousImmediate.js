@@ -1,5 +1,5 @@
 /*! Promiscuous; ©2013 Ruben Verborgh @license MIT https://github.com/RubenVerborgh/promiscuous*/
-var promiscuous={};
+var promiscuousImmediate={};
 (function (exports) {
   var func = "function",
       noop = function () {};
